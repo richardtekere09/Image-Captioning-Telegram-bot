@@ -54,3 +54,33 @@ Thumbs.db
 
 # Test files
 test_images/
+
+# ML Models (CRITICAL - Don't push to GitHub!)
+models/
+*.pth
+*.bin
+*.onnx
+*.safetensors
+
+# Cache directories
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Virtual environment
+venv/
+env/
+
+# Environment variables
+.env
+.env.local
+
+# Logs
+logs/
+*.log
+
+# macOS
+.DS_Store
+
+# Results
+results/models/
