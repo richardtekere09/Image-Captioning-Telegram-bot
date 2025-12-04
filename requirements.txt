@@ -1,86 +1,23 @@
-# ============================================
-# CORE DEPENDENCIES
-# ============================================
-
-# Telegram Bot Framework
-aiogram==3.4.1
-
-# Async HTTP Client
-aiohttp==3.9.1
-
 # Web Framework
-fastapi==0.109.0
-uvicorn[standard]==0.27.0
-python-multipart==0.0.6
+fastapi==0.104.1
+uvicorn[standard]==0.24.0
 
-# ============================================
-# MACHINE LEARNING
-# ============================================
+# Telegram Bot
+aiogram==3.3.0
 
-# Deep Learning Framework
-torch==2.1.2
-torchvision==0.16.2
-
-# Transformers (BLIP model)
-transformers==4.37.0
-
-# Image Processing
-pillow==10.2.0
-
-# ============================================
-# CONFIGURATION & UTILITIES
-# ============================================
-
-# Environment Variables
-python-dotenv==1.0.0
-
-# Data Validation
-pydantic==2.5.3
-pydantic-settings==2.1.0
-
-# System Monitoring
-psutil==5.9.7
-
-# HTTP Requests
+# HTTP Client
+aiohttp==3.9.1
 requests==2.31.0
 
-# ============================================
-# BENCHMARKING & VISUALIZATION
-# ============================================
+# ML/AI
+torch==2.1.0
+torchvision==0.16.0
+transformers==4.35.0
+pillow==10.1.0
 
-# Plotting
-matplotlib==3.8.2
+# Data Validation
+pydantic==2.5.0
+pydantic-settings==2.1.0
 
-# Numerical Computing
-numpy==1.26.3
-
-# ============================================
-# DEVELOPMENT & TESTING
-# ============================================
-
-# Testing Framework
-pytest==7.4.4
-pytest-asyncio==0.23.3
-pytest-cov==4.1.0
-
-# Code Formatting
-black==24.1.1
-
-# Linting
-flake8==7.0.0
-
-# Type Checking
-mypy==1.8.0
-
-# Security Scanning
-bandit==1.7.6
-
-# ============================================
-# OPTIONAL (Uncomment if needed)
-# ============================================
-
-# Redis for caching (advanced)
-# redis==5.0.1
-
-# PostgreSQL for logging (advanced)
-# psycopg2-binary==2.9.9
+# Environment
+python-dotenv==1.0.0

@@ -24,7 +24,7 @@ from config import settings
 from ml.preprocessing import validate_image, load_and_preprocess, ImageValidationError
 from ml.inference import generate_caption, generate_caption_batch, InferenceError
 from ml.model_loader import get_model, get_model_info
-from utils.exceptions import APIError, ModelError, InvalidRequestError
+from utils.exceptions import APIError, InvalidRequestError
 
 # Configure logging
 logging.basicConfig(

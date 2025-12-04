@@ -1,0 +1,105 @@
+# Docker Compose Configuration
+# =============================
+# 
+# This file defines and runs both services together.
+#
+# Usage:
+#   docker-compose up          # Start both services
+#   docker-compose down        # Stop both services
+#   docker-compose logs -f     # View logs
+#   docker-compose ps          # Check status
+
+version: '3.8'
+
+services:
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  # FastAPI Service (ML Model Server)
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile.api
+    container_name: image-captioning-api
+    
+    # Environment variables
+    env_file:
+      - .env
+    
+    # Ports (expose API to host)
+    ports:
+      - "8000:8000"
+    
+    # Volumes (persist model cache)
+    volumes:
+      - ./models:/app/models
+      - ./logs:/app/logs
+    
+    # Health check
+    healthcheck:
+      test: ["CMD", "python", "-c", "import requests; requests.get('http://localhost:8000/health')"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+    
+    # Restart policy
+    restart: unless-stopped
+    
+    # Resource limits (optional, adjust based on your system)
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: 4G
+        reservations:
+          cpus: '1.0'
+          memory: 2G
+  
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  # Telegram Bot
+  # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+  
+  bot:
+    build:
+      context: .
+      dockerfile: Dockerfile.bot
+    container_name: image-captioning-bot
+    
+    # Environment variables
+    env_file:
+      - .env
+    
+    # Override API_URL to use container name
+    environment:
+      - API_URL=http://api:8000
+    
+    # Volumes
+    volumes:
+      - ./logs:/app/logs
+    
+    # Depends on API service
+    depends_on:
+      api:
+        condition: service_healthy
+    
+    # Restart policy
+    restart: unless-stopped
+    
+    # Resource limits
+    deploy:
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+# Networks (optional, uses default bridge network)
+# ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+networks:
+  default:
+    name: image-captioning-network
